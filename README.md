@@ -1,19 +1,6 @@
-BASE_APP
----------
-This is a stub application for Sinatra that is pre-configured for the following goodness:
-* Unicorn
-* Foreman
-* Rerun
-* Guard
-* Mongoid
-* Rspec
-* Cucumber
-* Capybara
-* Capybara Webkit
-* HAML, SASS, Compass
+Makerbot Store Presentation
+---------------------------
+This is my presentation for the Makerbot Store on April 24. It combines Foursquare check-in data from the past year with Three.js and a custom library to save that output to an STL file. The STL file can then be printed on the Makerbot.
 
-It also includes some Simplecov and Factory Girl to help out with testing.  To use, do a global search for "Base" and replace with your app name.
-
-Note that since this uses Capybara Webkit, you will need the Qt libraries installed.
-
+To run, it's simple (once MongoDB is running for geospatial indexing):
 rerun --pattern '{Gemfile,Gemfile.lock,*.rb}' foreman start
