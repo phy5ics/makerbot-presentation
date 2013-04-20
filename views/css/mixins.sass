@@ -1,0 +1,66 @@
+@mixin isBlock
+	display: block
+	overflow: hidden
+	position: relative
+	
+@mixin isLeftBlock
+	+isBlock
+	float: left
+	
+@mixin isRightBlock
+	+isBlock
+	float: left
+	
+@mixin isIR
+	+isBlock
+	text-indent: -9999em
+
+@mixin absolute
+	position: absolute
+	top: 0
+	left: 0
+	
+@mixin absoluteBottom
+	position: absolute
+	bottom: 0
+	left: 0	
+	
+@mixin center
+	margin: 0 auto
+
+@mixin left
+	float: left
+
+@mixin right
+	float: right
+	
+	
+@mixin headline
+	font-family: "proxima-nova-n6","proxima-nova",sans-serif
+	font-style: normal
+	font-weight: 600
+
+@mixin subhead
+	font-family: "proxima-nova-n8","proxima-nova",sans-serif
+	font-style: normal
+	font-weight: 800
+
+@mixin bodycopy	
+	font-family: "adelle-n4","adelle",sans-serif
+	font-style: normal
+	font-weight: 400
+
+@mixin bodycopy-italic
+	font-family: "adelle-i4","adelle",serif
+	font-style: italic
+	font-weight: 400
+
+@mixin bodycopy-bold
+	font-family: "adelle-n7","adelle",serif
+	font-style: normal
+	font-weight: 700
+
+@mixin simpletext
+	font-family: "proxima-nova-n4","proxima-nova",sans-serif
+	font-style: normal
+	font-weight: 400

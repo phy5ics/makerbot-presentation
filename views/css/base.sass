@@ -1,0 +1,367 @@
+@import compass/reset
+@import compass/utilities/general/clearfix
+@import compass/utilities/general/float
+@import compass/css3/border-radius
+@import compass/css3/columns
+@import compass/css3/box-shadow
+@import susy
+
+@import mixins
+
+*
+	outline: none
+	
+::-webkit-validation-bubble-message
+	display: none
+
+$xlarge: 10
+$large: 8
+$medium: 6
+$small: 6
+
+// @include at-breakpoint($xlarge)
+	
+$total-columns: 10
+$column-width: 4em
+$gutter-width: 1em
+$grid-padding: $gutter-width
+
+#container
+	height: 600px
+	width: 100%
+	left: 0px
+	background: #eaeaea
+	position:relative
+	overflow:hidden
+
+.container
+	@include container($total-columns, $small, $medium, $large, $xlarge)
+	// @include susy-grid-background
+	// padding: 0 0 2em 0
+
+body
+	+bodycopy
+	// background-color: $cream
+	background-color: #fff
+	line-height: 1.5em
+
+h1, h2, h3, h4, h5
+	font-weight: normal
+	
+h1
+	+headline
+	text-align: center
+	font-size: 2em
+	color: #999
+	margin: 1.4em 0
+
+h2
+	+bodycopy
+	text-align: center
+	font-size: 4.5em
+	line-height: 2em
+	//text-transform: uppercase
+	//color: #2b384b
+	color: #00aeef
+	margin: 1em 0
+
+h3
+	+headline
+	text-align: center
+	font-size: 2.2em
+	line-height: 1.666em
+	//text-transform: uppercase
+	color: #bbb
+
+h4
+	+headline
+	font-size: 1.4em
+	line-height: 0.9333em
+	
+h5
+	font-size: 1.2em
+	line-height: 0.8em
+
+em
+	+bodycopy-italic
+
+b
+	+bodycopy-bold
+
+p
+	+bodycopy
+	font-size: 1.4em
+	padding: 0 0 1em 0
+	line-height: 1.6em
+	color: #999
+
+a, a:link, a:hover
+	text-decoration: none
+	color: #999
+
+img
+	max-width: 100%
+	height: auto
+	
+img.drop-shadow
+	margin-bottom: 3em
+
+img.photo
+	max-width: 96%
+	padding: 2%
+	border: 1px solid #eaeaea
+
+
+
+header
+	position: fixed
+	right: 0
+	left: 0
+	padding: 0
+	top: 0
+	z-index: 2000
+	background-color: #61646b
+	border-bottom: 1px solid #555
+	min-height: 100px
+	
+nav
+	+clearfix
+	.logo
+		+isBlock
+		float: left
+		display: block
+		margin-top: 38px
+		width: 225px
+		height: 35px
+		background: image-url("sm-logo-white.png") no-repeat 0 0
+		text-indent: -9999em
+	#links
+		+float-right
+		padding: 40px 0 10px 0
+	#menu
+
+	ul
+		+float-right
+		margin: 0
+		li
+			+simpletext
+			+float-left
+			padding: 46px 8px 10px
+			line-height: 20px
+			list-style: none
+			a, a:link
+				color: #fff
+			a:hover
+				color: #999
+			
+#about
+	width: 100%
+	position: fixed
+	top: 101px
+	background-color: #00aeef
+	padding-bottom: 40px
+	#about-metadata
+		+clearfix
+		height: 80px
+		h4
+			height: 100px
+			color: #666
+		h4.year
+			color: #eaeaea
+	#about-header
+		h1
+			margin-bottom: 1em
+			font-size: 4em
+			line-height: 0.9em
+			color: #fff
+		p 
+			+subhead
+
+#home
+	z-index: 1000
+	position: relative	
+	@include at-breakpoint($small)
+		margin-top: 1100px
+	@include at-breakpoint($medium)
+		margin-top: 800px
+	@include at-breakpoint($large)
+		margin-top: 680px
+	@include at-breakpoint($xlarge)
+		margin-top: 526px
+
+#content
+	margin-top: 140px
+	h2
+		margin: 1em 0 0.2em 0
+	
+section
+	background-color: #fff
+	border-top: 1px solid #eaeaea
+	&:last-child
+		margin-bottom: 3em
+	h2
+		padding-top: 0.2em
+		line-height: 1em
+	h3
+		font-size: 1.3em
+		line-height: 1em
+		padding: 0.7em 0 3em 0
+		
+	.meta
+		color: #bbb
+		padding: 0 0 4em 0
+		.left
+			+left
+		.right
+			+right
+	.client-logo
+		text-align: center
+	.text
+		@include columns(20em 2)
+	.project-image
+		text-align: center
+		padding-top: 20px
+		line-height: 0
+	p
+		color: #666
+	.project-footer
+		z-index: 1000
+		border-top: 1px solid #eaeaea
+		background-color: #fafafa
+		padding: 2em 0 2em 0
+		.container
+			text-align: center
+			p, li
+				+subhead
+				font-size: 1em
+				color: #999
+				padding: 0
+			.left
+				@include at-breakpoint($xlarge, $medium)
+					@include pre(1)
+					@include span-columns(4)
+			.right
+				@include at-breakpoint($xlarge, $medium)
+					@include post(1)
+					@include span-columns(4)
+
+
+article
+	margin-top: 3em
+	h3
+		margin-top: 0.5em
+	
+article.left
+	@include at-breakpoint($xlarge, $medium)
+		@include span-columns(5)
+
+article.right
+	@include at-breakpoint($xlarge, $medium)
+		@include span-columns(5 omega)
+
+	
+.simple_form
+	div.input
+		margin-bottom: 10px
+		position: relative
+		clear: both
+
+	input
+		+simpletext
+		border-radius: 4px
+		color: #000
+		padding: 10px 15px 10px 100px
+		margin: 0
+		background-color: #fbfbfb
+		border: 1px solid #ccc
+		width: 256px
+		font-size: 1.5em
+		position: relative
+		z-index: 2
+	
+	label.active
+		color: #000
+	
+	input:focus
+		border-color: #888
+
+	label
+		+simpletext
+		display: block
+		margin-top: 10px
+		font-size: 13px
+		color: #555
+		text-transform: capitalize
+		position: absolute
+		top: 3px
+		left: 16px
+		color: #ccc
+		background: #fbfbfb
+		z-index: 5
+		width: 70px
+		text-align: left
+	
+	input[type=submit]
+		+simpletext
+		min-width: 160px
+		height: 45px
+		font-weight: normal
+		margin: 15px 0 30px 0
+		font-size: 16px
+		line-height: 16px
+		background-color: #3bad56
+		color: #fff !important
+		border: 1px solid #474747
+	
+	.error_notification
+		+simpletext
+		color: #ff0000
+	
+	.error
+		+simpletext
+		color: black
+		display: inline
+		margin-left: 20px
+		color: #ff0000
+
+	.hint
+		+simpletext
+		clear: left
+		margin-left: 120px
+		color: #555
+		display: block
+		font-style: italic
+	
+	.button
+		display: inline-block
+		padding: 10px 15px 10px 15px
+		width: auto
+		white-space: nowrap
+		height: 32px
+		margin: 1px 5px 1px 0
+		padding: 0 22px
+		text-decoration: none
+		text-align: center
+		font-size: 15px
+		line-height: 32px
+		cursor: pointer
+		border: 1px solid #147f95
+		border-radius: 4px
+		color: #fff !important
+		vertical-align: top
+		letter-spacing: 0.3px
+		-webkit-transition: opacity .2s
+		background-color: #3bad56
+		text-shadow: none
+		text-transform: capitalize
+		
+	.button:hover
+		opacity: 0.8
+
+footer
+	background: #2b384b
+	height: 10em
+	padding: 2.2em 0 0 0
+	p
+		+bodycopy
+		color: #fff

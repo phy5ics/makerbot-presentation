@@ -1,0 +1,5 @@
+#checkins
+	%ul
+		- @items.each_with_index do |i, idx|
+			- if i.venue? and i.venue.id?
+				%li= "#{i.venue.id}"
