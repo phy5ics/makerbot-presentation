@@ -81,10 +81,25 @@ module Makerbot
 		end
 		
 		get '/checkins' do
+		  if !session[:auth_token]
+		    redirect '/auth/foursquare'
+		  end
+		  
 			client = Foursquare2::Client.new(oauth_token: session[:auth_token])
-			checkins = client.user_checkins(afterTimestamp: 1325376000, limit: 250)
-			puts checkins.items.inspect
+			checkins = client.user_checkins(afterTimestamp: 1325376000, limit: 10)
 			@items = checkins.items
+			
+			@venues = []
+			checkins.items.each do |c|
+			  if c.venue? and c.venue.id?
+			    # venue = client.venue c.venue.id
+			    venue = new Checkin
+			    
+			    
+			    @venues << venue
+			  end
+			end
+			
 			haml :checkins
 		end
 
