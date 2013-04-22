@@ -8,17 +8,18 @@
 		%meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'}	
 			
 		/[if lt IE 9]
-			%script{:type => "text/javascript", :src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}			
+			%script{:type => "text/javascript", :src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
 			
 		- if @css
 			- @css.each do |style|
 				%link{rel: "stylesheet", type: 'text/css', href: "#{style}"}
 
+		%script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+
 		- if @js
 			- @js.each do |script|
 				%script{type: "text/javascript", src: "#{script}"}
 			
-		%script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
 		%script{:type => "text/javascript"}
 			:plain
 				try{Typekit.load();}catch(e){}
