@@ -32,12 +32,15 @@ $grid-padding: $gutter-width
 	left: 0px
 	background: #eaeaea
 	position:relative
-	overflow:hidden
 
 .container
 	@include container($total-columns, $small, $medium, $large, $xlarge)
 	// @include susy-grid-background
 	// padding: 0 0 2em 0
+
+#map-canvas
+	width: 100%
+	height: 100%
 
 body
 	+bodycopy
