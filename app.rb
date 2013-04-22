@@ -11,7 +11,7 @@ require 'omniauth'
 require 'omniauth-foursquare'
 require 'foursquare2'
 
-require_relative './models/checkins'
+require_relative './models/venue'
 
 set :environment, ENV['RACK_ENV']
 
@@ -86,21 +86,72 @@ module Makerbot
 		  end
 		  
 			client = Foursquare2::Client.new(oauth_token: session[:auth_token])
-			checkins = client.user_checkins(afterTimestamp: 1325376000, limit: 10)
+			checkins = client.user_checkins(afterTimestamp: 1325376000, limit: 250)
 			@items = checkins.items
 			
 			@venues = []
 			checkins.items.each do |c|
 			  if c.venue? and c.venue.id?
-			    # venue = client.venue c.venue.id
-			    venue = new Checkin
-			    
-			    
-			    @venues << venue
+					if Venue.where(venueId: c.venue.id).count == 0
+						puts 'Venue not found, adding location to database...'
+				    # venue = client.venue c.venue.id
+				    Venue.create!(venueId: c.venue.id, name: c.venue.name, location: [c.venue.location.lat, c.venue.location.lng], checkins: c.venue.beenHere['count'])
+				    # @venues << venue
+					end
 			  end
 			end
 			
 			haml :checkins
+		end
+		
+		get '/bounds' do
+			
+			@css = ['/css/base.css']
+			@js = ['https://maps.googleapis.com/maps/api/js?key=AIzaSyAHvGsSD0S4K-VD982cUq2tzMDHIEqBzsI&sensor=false', '/js/mapping.js']
+			
+			# Greenpoint only:
+			NWBounds = [40.739584, -73.966570]
+			# More of NYC:
+			# NWBounds = [40.760423, -74.003520]
+			SEBounds = [40.706799, -73.941336]
+			
+			@venues = Venue.within_box(location: [NWBounds, SEBounds])
+			
+			gridLatResolution = 6
+			gridLngResolution = 6
+			
+			unitsLat = (NWBounds[0] - SEBounds[0]) / gridLatResolution
+			unitsLng = (NWBounds[1] - SEBounds[1]) / gridLngResolution
+			
+			puts unitsLat
+			puts unitsLng
+			
+			@coordsGrid = []
+			
+			(0..gridLatResolution-1).each do |row|
+				(0..gridLngResolution-1).each do |col|
+					lat1 = NWBounds[0] - (row * unitsLat)
+					lng1 = NWBounds[1] - (col * unitsLng)
+					
+					lat2 = NWBounds[0] - ((row + 1) * unitsLat)
+					lng2 = NWBounds[1] - ((col + 1)* unitsLng)
+					
+					coords = {nw: [lat1, lng1], se: [lat2, lng2]}
+					@coordsGrid << coords
+				end
+			end
+			
+			@coordsGrid.each_with_index do |c, i|
+				venuesInBox = Venue.within_box(location: [c[:nw], c[:se]])
+				c[:checkins] = venuesInBox.count
+				puts "Grid box #{i}: #{venuesInBox.count}"
+			end
+			
+			@coordsJson = @coordsGrid.to_json
+			
+			puts @coordsGrid
+			puts @venues
+			haml :bounds
 		end
 
 		# ---------------------------------------------------------
