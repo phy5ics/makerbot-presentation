@@ -2,8 +2,4 @@
 	%ul
 		- @items.each_with_index do |i, idx|
 			- if i.venue? and i.venue.id?
-				%li= "#{i.venue.id}"
-				-# %li= "#{i.inspect}"
-	%ul
-		- @venues.each do |v|
-			%li= "#{v.name} #{v.location.lat} #{v.location.lng}"
+				%li= "#{i.venue.name} #{i.venue.beenHere['count']}"
