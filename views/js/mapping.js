@@ -6,7 +6,7 @@ MB.Core = function() {
 	var init = function() {
 		console.log('initializing');
 		var mapOptions = {
-			center: new google.maps.LatLng(40.739584, -73.96657),
+			center: new google.maps.LatLng(40.721860, -73.949404),
 	   		zoom: 14,
 	   		mapTypeId: google.maps.MapTypeId.ROADMAP
 	 	};
@@ -14,10 +14,10 @@ MB.Core = function() {
 		map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 	
 		var rectangle = new google.maps.Rectangle({
-		  strokeColor: '#FF0000',
+		  strokeColor: '#333',
 	    strokeOpacity: 0.8,
-	    strokeWeight: 0,
-	    fillColor: '#FF0000',
+	    strokeWeight: 1,
+	    fillColor: '#eaeaea',
 	    fillOpacity: 0.35,
 	    map: map,
 	    bounds: new google.maps.LatLngBounds(
@@ -39,7 +39,7 @@ MB.Core = function() {
 	    strokeOpacity: 0.8,
 	    strokeWeight: 0,
 	    fillColor: '#000000',
-	    fillOpacity: (0.1 * coords.checkins),
+	    fillOpacity: (0.015 * coords.checkins),
 	    map: map,
 	    bounds: new google.maps.LatLngBounds(
 	      new google.maps.LatLng(coords.nw[0], coords.nw[1]),
