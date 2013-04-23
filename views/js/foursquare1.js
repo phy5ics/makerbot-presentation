@@ -27,14 +27,7 @@ MB.Core = function() {
 		// world
 		var material =  new THREE.MeshLambertMaterial({ color:0xffffff, shading: THREE.FlatShading });
 		
-		for (var i = 1; i < grid.length; i++) {
-			if (rowCount < rowMax) {
-				rowCount++;
-			} else {
-				rowCount = 1;
-				columnCount++;
-			}
-			
+		for (var i = 0; i < grid.length; i++) {
 			var height = (grid[i].checkins + 1) * 5;
 			var geometry = new THREE.CylinderGeometry(0, elementSize, height, 4, 1);
 			
@@ -45,6 +38,13 @@ MB.Core = function() {
 			mesh.updateMatrix();
 			mesh.matrixAutoUpdate = false;
 			scene.add(mesh);
+			
+			if (rowCount < rowMax) {
+				rowCount++;
+			} else {
+				rowCount = 1;
+				columnCount++;
+			}
 		}
 
 		// lights

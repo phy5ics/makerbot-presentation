@@ -39,7 +39,7 @@ MB.Core = function() {
 	    strokeOpacity: 0.8,
 	    strokeWeight: 0,
 	    fillColor: '#000000',
-	    fillOpacity: (0.015 * coords.checkins),
+	    fillOpacity: (0.01 * coords.checkins),
 	    map: map,
 	    bounds: new google.maps.LatLngBounds(
 	      new google.maps.LatLng(coords.nw[0], coords.nw[1]),
