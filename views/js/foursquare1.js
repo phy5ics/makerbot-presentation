@@ -1,97 +1,55 @@
 window.MB = window.MB || {};
 
 MB.Core = function() {
-	var container;
-	var camera, controls, scene, renderer;
-	var cross;
-
+	var map;
+	
 	var init = function() {
-		var rowCount = 1;
-		var rowMax = 6;
-		var columnCount = 1;
-		var columnMax = Math.floor(grid.length / rowMax);
-		var elementSize = 40;
-		
-		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-		camera.position.z = 500;
-
-		controls = new THREE.OrbitControls(camera);
-		controls.center = new THREE.Vector3((rowMax * elementSize) / 2, 0, (columnMax * elementSize) / 2);
-		controls.autoRotate = true;
-		controls.autoRotateSpeed = 0.5;
-		controls.addEventListener('change', render);
-
-		scene = new THREE.Scene();
-		scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
-
-		// world
-		var material =  new THREE.MeshLambertMaterial({ color:0xffffff, shading: THREE.FlatShading });
-		
+		console.log('initializing');
+		var mapOptions = {
+			center: new google.maps.LatLng(40.721860, -73.949404),
+	   		zoom: 14,
+	   		mapTypeId: google.maps.MapTypeId.ROADMAP
+	 	};
+	
+		map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	
+		var rectangle = new google.maps.Rectangle({
+		  strokeColor: '#333',
+	    strokeOpacity: 0.8,
+	    strokeWeight: 1,
+	    fillColor: '#eaeaea',
+	    fillOpacity: 0.35,
+	    map: map,
+	    bounds: new google.maps.LatLngBounds(
+	      new google.maps.LatLng(40.739584, -73.96657),
+				//new google.maps.LatLng(40.760423, -74.003520),
+	      new google.maps.LatLng(40.706799, -73.941336))
+	  });
+	
 		for (var i = 0; i < grid.length; i++) {
-			var height = (grid[i].checkins + 1) * 5;
-			var geometry = new THREE.CylinderGeometry(0, elementSize, height, 4, 1);
-			
-			var mesh = new THREE.Mesh(geometry, material);
-			mesh.position.x = ((rowCount * elementSize) + columnCount);
-			mesh.position.y = height / 2;
-			mesh.position.z = ((columnCount * elementSize) + rowCount);
-			mesh.updateMatrix();
-			mesh.matrixAutoUpdate = false;
-			scene.add(mesh);
-			
-			if (rowCount < rowMax) {
-				rowCount++;
-			} else {
-				rowCount = 1;
-				columnCount++;
-			}
+			createRectangles(grid[i]);
 		}
-
-		// lights
-		light = new THREE.DirectionalLight(0xffffff);
-		light.position.set(1, 1, 1);
-		scene.add(light);
-
-		light = new THREE.DirectionalLight(0x000000);
-		light.position.set(-1, -1, -1);
-		scene.add(light);
-
-		light = new THREE.AmbientLight(0x222222);
-		scene.add(light);
-
-
-		// renderer
-		renderer = new THREE.WebGLRenderer({ antialias: false });
-		renderer.setClearColor(scene.fog.color, 1);
-		renderer.setSize(window.innerWidth, window.innerHeight);
-
-		container = $('#container');
-		container.append(renderer.domElement);
-
-		window.addEventListener('resize', onWindowResize, false);
+	
 	}
 
-	var onWindowResize = function() {
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		render();
+	var createRectangles = function(coords) {
+		console.log('creating rectangles');
+		var rectangle = new google.maps.Rectangle({
+		  strokeColor: '#FF0000',
+	    strokeOpacity: 0.8,
+	    strokeWeight: 0,
+	    fillColor: '#000000',
+	    fillOpacity: (0.01 * coords.checkins),
+	    map: map,
+	    bounds: new google.maps.LatLngBounds(
+	      new google.maps.LatLng(coords.nw[0], coords.nw[1]),
+	      new google.maps.LatLng(coords.se[0], coords.se[1]))
+	  });
 	}
-
-	var animate = function() {
-		requestAnimationFrame(animate);
-		controls.update();
-	}
-
-	var render = function() {
-		renderer.render(scene, camera);
-	}
-
+	
 	return {
 		init: function() {
 			init();
-			animate();
 		}
 	}
 

@@ -1,4 +1,10 @@
 #container
+	#map-canvas something
+
+-#%ul
+	-# @venues.each do |v|
+		-#%li= "#{v.name} #{v.checkins}"
 
 %script{:type => "text/javascript"}
 	var grid = #{@coordsJson};
+	

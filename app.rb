@@ -56,7 +56,7 @@ module Makerbot
     end
 
 		# ---------------------------------------------------------
-		# Foursquare + Omniauth
+		# Omniauth
 		#	---------------------------------------------------------
 		
 		get '/auth/:name/callback' do
@@ -79,8 +79,12 @@ module Makerbot
 			session[:authenticated] = false
 			redirect '/'
 		end
+
+		# ---------------------------------------------------------
+		# Foursquare API
+		#	---------------------------------------------------------
 		
-		get '/checkins' do
+		get '/foursquare/checkins' do
 		  if !session[:auth_token]
 		    redirect '/auth/foursquare'
 		  end
@@ -104,7 +108,20 @@ module Makerbot
 			haml :checkins
 		end
 		
-		get '/bounds' do
+		# ---------------------------------------------------------
+		# Demos
+		#	---------------------------------------------------------
+		
+		get '/stloader' do
+			
+			
+			@css = ['/css/base.css']
+			@js = ['http://use.typekit.net/ibh0xgn.js', '/js/three-older.js', '/js/stloader.js']
+		
+			haml :stloader
+		end
+		
+		get '/foursquare/1' do
 			# Greenpoint only:
 			nwBounds = [40.739584, -73.966570]
 			# More of NYC:
@@ -120,11 +137,11 @@ module Makerbot
 			@venues = Venue.within_box(location: [nwBounds, seBounds])
 			
 			@css = ['/css/base.css']
-			@js = ['https://maps.googleapis.com/maps/api/js?key=AIzaSyAHvGsSD0S4K-VD982cUq2tzMDHIEqBzsI&sensor=false', '/js/mapping.js']
-			haml :bounds
+			@js = ['https://maps.googleapis.com/maps/api/js?key=AIzaSyAHvGsSD0S4K-VD982cUq2tzMDHIEqBzsI&sensor=false', '/js/foursquare1.js']
+			haml :foursquare1
 		end
 
-		get '/foursquare/1' do
+		get '/foursquare/2' do
 			nwBounds = [40.739584, -73.966570]
 			seBounds = [40.706799, -73.941336]
 			
@@ -135,8 +152,8 @@ module Makerbot
 			@coordsJson = coordsGrid.to_json
 			
 			@css = ['/css/base.css']
-			@js = ['http://use.typekit.net/ibh0xgn.js', '/js/three.js', '/js/orbit.js', '/js/detector.js', '/js/foursquare1.js']
-			haml :foursquare1
+			@js = ['http://use.typekit.net/ibh0xgn.js', '/js/three.js', '/js/orbit.js', '/js/FileSaver.js', '/js/mesh.js', '/js/detector.js', '/js/foursquare2.js']
+			haml :foursquare2
 		end
 		
 		
